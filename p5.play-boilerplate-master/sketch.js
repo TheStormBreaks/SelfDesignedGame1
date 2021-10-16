@@ -123,9 +123,9 @@ function draw() {
   //only show the welcome background
 
    
-  if (mouseX>1100){
-    gameState = PLAY
-  }
+  //if (mouseX>1100){
+    //gameState = PLAY
+  //}
    //checking if the game state play works or not
 
 
