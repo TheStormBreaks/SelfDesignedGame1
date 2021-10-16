@@ -124,7 +124,7 @@ function draw() {
     bottomCliff.visible = false;
     spaceship.visible = false;
     welcomebg.visible = true;
-    score.visible = false;
+    
     
    
     
@@ -145,7 +145,7 @@ function draw() {
     bottomCliff.visible = true;
     spaceship.visible = true;
     welcomebg.visible = false;
-    score.visible = true;
+    
     topCliff.velocityX = -10
     bottomCliff.velocityX = -10
     spaceship.y = mouseY;
@@ -197,7 +197,12 @@ function draw() {
   //to make it seem like an infinite loop.
   drawSprites();
 
-  text("Score: " + score, 500, 50);
+  
+
+  if (gameState === PLAY){
+    text("Score: " + score, 500, 50);
+
+  }
   
 }
 
@@ -249,6 +254,7 @@ function spawnOrbs() {
     orbs.setCollider("circle", 0, 0, 35)
     orbs.debug = true;
     orbs.scale = 0.3;
+    orbs.velocityX = -(6 + 3 * score / 100);
     
 
     //generate random obstacles;
