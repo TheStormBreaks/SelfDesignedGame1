@@ -3,7 +3,9 @@ var topCliff, bottomCliff, topCliff_img, bottomCliff_img;
 var spaceship, spaceship_img;
 var welcomebg, welcomebg_img;
 var obstacle1, obstacle2, obstacle3, obstacle4//, obstacle5;
-var obstaclesGroup
+var obstaclesGroup;
+var power_orb;
+var score;
 
 //variables for the game
 
@@ -36,6 +38,8 @@ function preload() {
   obstacle3 = loadImage("pictures/obstacle 3.png");
   obstacle4 = loadImage("pictures/obstacle 4.png");
   //obstacle5 = loadImage("pictures/obstacle 5.png");
+
+  power_orb_image = loadImage("pictures/orbs.png");
   
 //loading audios, videos and images
 
@@ -48,6 +52,8 @@ function setup() {
 
   createCanvas(displayWidth, displayHeight);
   //canvas created
+
+  score = 0;
 
   fill('white')
   text("move the mouse so that x>1200.", 200, 200)
@@ -65,18 +71,18 @@ function setup() {
   //set to not visible so that is shows up iff gameState === WELCOME
 
 
-  topCliff = createSprite(0, 0, displayWidth/2, displayHeight);
+  topCliff = createSprite(displayWidth/2, -20, displayWidth, displayHeight);
   topCliff.addImage(topCliff_img);
-  topCliff.scale = 0.85;
+  topCliff.scale = 1.5;
   
   //creates the top cliff
   //adds the image for the top cliff
   //scales the top cliff to reduce size
    
 
-  bottomCliff = createSprite(800, 400, displayWidth, displayHeight);
+  bottomCliff = createSprite(800, 300, displayWidth, displayHeight);
   bottomCliff.addImage(bottomCliff_img);
-  bottomCliff.scale = 0.85;
+  bottomCliff.scale = 1.5;
   //creates the bottom cliff
   //adds the image for the bottom cliff
   //scales the bottom cliff to reduce size
@@ -90,6 +96,7 @@ function setup() {
 
 
   obstaclesGroup = new Group();
+  orbsGroup = new Group();
 
 }
 
@@ -107,6 +114,8 @@ function draw() {
   console.log(mouseX, mouseY);
   //console.log("MOVE THE MOUSE SO THAT X>1200");
   //to check the co ordinates of the mouse
+
+  
  
 
   if(gameState === WELCOME){
@@ -115,6 +124,8 @@ function draw() {
     bottomCliff.visible = false;
     spaceship.visible = false;
     welcomebg.visible = true;
+    score.visible = false;
+    
    
     
 
@@ -123,9 +134,9 @@ function draw() {
   //only show the welcome background
 
    
-  //if (mouseX>1100){
-    //gameState = PLAY
-  //}
+  if (mouseX>1100){
+    gameState = PLAY
+  }
    //checking if the game state play works or not
 
 
@@ -134,10 +145,18 @@ function draw() {
     bottomCliff.visible = true;
     spaceship.visible = true;
     welcomebg.visible = false;
+    score.visible = true;
     topCliff.velocityX = -10
     bottomCliff.velocityX = -10
     spaceship.y = mouseY;
     spawnObstacles();
+    spawnOrbs();
+
+    score = score + Math.round(getFrameRate() / 60);
+    if (keyDown("space") && trex.y >= 161) {
+      trex.velocityY = -12;
+    }
+
   }
   //iff game state is play, the cliffs move
   //and then only th spaceship moves
@@ -159,6 +178,7 @@ function draw() {
     bottomCliff.velocityX = 0;
     //obstaclesGroup.setVisibleEach(false);
     obstaclesGroup.setVelocityXEach(0);
+    orbsGroup.setVelocityXEach(0);
     }
   
 
@@ -176,6 +196,8 @@ function draw() {
   //resets the position of the top cliff
   //to make it seem like an infinite loop.
   drawSprites();
+
+  text("Score: " + score, 500, 50);
   
 }
 
@@ -193,6 +215,7 @@ function spawnObstacles() {
     obstacle.velocityX = -(12);
     obstacle.setCollider("circle", 0, 0, 35)
     obstacle.debug = true;
+    obstacle.velocityX = -(6 + 3 * score / 100);
     
 
     //generate random obstacles;
@@ -215,6 +238,39 @@ function spawnObstacles() {
       }
 
       obstaclesGroup.add(obstacle);
+      
+  }
+}
+
+function spawnOrbs() {
+  if (frameCount % 300 === 0) {
+    var orbs = createSprite(1500, random(165, 516), 5, 40);
+    orbs.velocityX = -(12);
+    orbs.setCollider("circle", 0, 0, 35)
+    orbs.debug = true;
+    orbs.scale = 0.3;
+    
+
+    //generate random obstacles;
+    var rand = Math.round(random(1, 4));
+    switch (rand) {
+      case 1:
+        orbs.addImage(power_orb_image);
+        break;
+      case 2:
+        orbs.addImage(power_orb_image);
+        break;
+      case 3:
+       orbs.addImage(power_orb_image);
+        break;
+      case 4:
+       orbs.addImage(power_orb_image);
+        break;
+        default:
+        break;
+      }
+
+      orbsGroup.add(orbs);
       
   }
 }
