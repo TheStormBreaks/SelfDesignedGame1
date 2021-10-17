@@ -7,6 +7,8 @@ var obstaclesGroup;
 var power_orb;
 var score;
 
+var enterButton
+
 //variables for the game
 
 
@@ -70,6 +72,8 @@ function setup() {
   //set scale to reduce the size
   //set to not visible so that is shows up iff gameState === WELCOME
 
+  enterButton = createSprite(displayWidth/2.15,displayHeight - 200, 100, 50)
+  enterButton.shapeColor = "#933A16"
 
   topCliff = createSprite(displayWidth/2, -20, displayWidth, displayHeight);
   topCliff.addImage(topCliff_img);
@@ -134,10 +138,14 @@ function draw() {
   //only show the welcome background
 
    
-  if (mouseX>1100){
+  /*if (mouseX>1100){
     gameState = PLAY
-  }
+  }*/
    //checking if the game state play works or not
+
+   if (mousePressedOver(enterButton)){
+    gameState = PLAY
+   }
 
 
   if (gameState === PLAY){
@@ -145,6 +153,7 @@ function draw() {
     bottomCliff.visible = true;
     spaceship.visible = true;
     welcomebg.visible = false;
+    enterButton.visible = false
     
     topCliff.velocityX = -10
     bottomCliff.velocityX = -10
@@ -197,6 +206,11 @@ function draw() {
   //to make it seem like an infinite loop.
   drawSprites();
 
+  if(gameState===WELCOME){
+    fill(255)
+    textSize(17)
+    text("ENTER", displayWidth/2.24, displayHeight -193)
+    }
   
 
   if (gameState === PLAY){
