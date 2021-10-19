@@ -95,7 +95,7 @@ function setup() {
   spaceship = createSprite(100, 200, 20, 20);
   spaceship.addImage(spaceship_img);
   spaceship.debug = true;
-  spaceship.setCollider("rectangle", 0, 0, 100, 20)
+  spaceship.setCollider("rectangle", 30, 20, 100, 60)
   //create spaceship sprite and add image. 
 
 
@@ -128,11 +128,6 @@ function draw() {
     bottomCliff.visible = false;
     spaceship.visible = false;
     welcomebg.visible = true;
-    
-    
-   
-    
-
   }
   //dissappear the cliffs, and the spaceship if game is at welcome stage
   //only show the welcome background
@@ -160,7 +155,7 @@ function draw() {
     spaceship.y = mouseY;
     spawnObstacles();
     spawnOrbs();
-
+    
     score = score + Math.round(getFrameRate() / 60);
     if (keyDown("space") && trex.y >= 161) {
       trex.velocityY = -12;
@@ -181,14 +176,14 @@ function draw() {
       }
     }
 
-    if(gameState === END){
-    //spaceship.visible = false;
-    topCliff.velocityX = 0;
-    bottomCliff.velocityX = 0;
-    //obstaclesGroup.setVisibleEach(false);
-    obstaclesGroup.setVelocityXEach(0);
-    orbsGroup.setVelocityXEach(0);
-    }
+  if(gameState === END){
+   //spaceship.visible = false;
+   topCliff.velocityX = 0;
+   bottomCliff.velocityX = 0;
+   //obstaclesGroup.setVisibleEach(false);
+   obstaclesGroup.setVelocityXEach(0);
+   orbsGroup.setVelocityXEach(0);
+  }
   
 
 
