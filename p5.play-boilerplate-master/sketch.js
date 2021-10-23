@@ -8,14 +8,14 @@ var power_orb;
 var score;
 var GameEnd, gameend_image;
 
-var enterButton
+var enterButton;
 
 //variables for the game
 
 
 var PLAY = 1;
 var END = 0;
-var STORY, WELCOME
+var STORY, WELCOME;
 var gameState = WELCOME;
 //var gameState = PLAY;
 //variables for the game state
@@ -71,8 +71,8 @@ function setup() {
 
 
 
-  fill('white')
-  text("move the mouse so that x>1200.", 200, 200)
+  fill('white');
+  text("move the mouse so that x>1200.", 200, 200);
   bg = createSprite(700, 400, displayWidth, displayHeight);
   bg.addImage(bg_img);
   //create background sprite and add image
@@ -95,8 +95,8 @@ function setup() {
   GameEnd.visible = false;
 
 
-  enterButton = createSprite(displayWidth/2.15,displayHeight - 200, 100, 50)
-  enterButton.shapeColor = "#933A16"
+  enterButton = createSprite(displayWidth/2.15,displayHeight - 200, 100, 50);
+  enterButton.shapeColor = "#933A16";
 
 
 
@@ -125,7 +125,7 @@ function setup() {
   spaceship = createSprite(100, 200, 20, 20);
   spaceship.addImage(spaceship_img);
   spaceship.debug = true;
-  spaceship.setCollider("rectangle", 30, 20, 100, 60)
+  spaceship.setCollider("rectangle", 30, 20, 100, 60);
   //create spaceship sprite and add image. 
 
 
@@ -178,7 +178,7 @@ function draw() {
 
 
   if (mousePressedOver(enterButton)){
-    gameState = PLAY
+    gameState = PLAY;
   }
 
    
@@ -193,8 +193,8 @@ function draw() {
     enterButton.visible = false;
     
     
-    topCliff.velocityX = -10
-    bottomCliff.velocityX = -10
+    topCliff.velocityX = -10;
+    bottomCliff.velocityX = -10;
     spaceship.y = mouseY;
     spawnObstacles();
     spawnOrbs();
@@ -219,7 +219,7 @@ function draw() {
 
   for(var i = 0; i<obstaclesGroup.length; i++){
     if(obstaclesGroup.get(i).isTouching(spaceship)){
-      //obstaclesGroup.get(i).destroy()
+      //obstaclesGroup.get(i).destroy();
       spaceship.destroy();
       gameState = END;
     }
@@ -263,9 +263,9 @@ function draw() {
   drawSprites();
 
   if(gameState===WELCOME){
-    fill(255)
-    textSize(17)
-    text("ENTER", displayWidth/2.24, displayHeight -193)
+    fill(255);
+    textSize(17);
+    text("ENTER", displayWidth/2.24, displayHeight -193);
   }
   
 
@@ -274,9 +274,9 @@ function draw() {
   }
 
   topCliff.debug = true;
-  topCliff.setCollider("rectangle", 0, 75, 10000000, 140)
+  topCliff.setCollider("rectangle", 0, 75, 10000000, 140);
   bottomCliff.debug = true;
-  bottomCliff.setCollider("rectangle", 0, 355, 10000000, 140)
+  bottomCliff.setCollider("rectangle", 0, 355, 10000000, 140);
 
  
   
@@ -294,7 +294,7 @@ function spawnObstacles() {
   if (frameCount % 90 === 0) {
     var obstacle = createSprite(1500, random(165, 516), 10, 40);
     obstacle.velocityX = -(12);
-    obstacle.setCollider("circle", 0, 0, 35)
+    obstacle.setCollider("circle", 0, 0, 35);
     obstacle.debug = true;
     obstacle.velocityX = -(6 + 3 * score / 100);
     
@@ -327,7 +327,7 @@ function spawnOrbs() {
   if (frameCount % 300 === 0) {
     var orbs = createSprite(1500, random(165, 516), 5, 40);
     orbs.velocityX = -(12);
-    orbs.setCollider("circle", 0, 0, 35)
+    orbs.setCollider("circle", 0, 0, 35);
     orbs.debug = true;
     orbs.scale = 0.3;
     orbs.velocityX = -(6 + 3 * score / 100);
