@@ -6,6 +6,7 @@ var obstacle1, obstacle2, obstacle3, obstacle4;
 var obstaclesGroup;
 var power_orb;
 var score;
+var GameEnd, gameend_image;
 
 var enterButton
 
@@ -48,6 +49,9 @@ function preload() {
 
   
   power_orb_image = loadImage("pictures/orbs.png");
+
+
+  gameend_image = loadImage("pictures/go.png");
   
 
   //loading audios, videos and images
@@ -83,6 +87,12 @@ function setup() {
   //set scale to reduce the size
   //set to not visible so that is shows up iff gameState === WELCOME
 
+
+
+  GameEnd = createSprite();
+  GameEnd.addImage(gameend_image);
+  GameEnd.scale = 0;
+  GameEnd.visible = false;
 
 
   enterButton = createSprite(displayWidth/2.15,displayHeight - 200, 100, 50)
@@ -180,7 +190,8 @@ function draw() {
     bottomCliff.visible = true;
     spaceship.visible = true;
     welcomebg.visible = false;
-    enterButton.visible = false
+    enterButton.visible = false;
+    
     
     topCliff.velocityX = -10
     bottomCliff.velocityX = -10
@@ -220,12 +231,13 @@ function draw() {
    
 
   if(gameState === END){
-    //spaceship.visible = false;
+    spaceship.visible = false;
     topCliff.velocityX = 0;
     bottomCliff.velocityX = 0;
-    //obstaclesGroup.setVisibleEach(false);
+    obstaclesGroup.setVisibleEach(false);
     obstaclesGroup.setVelocityXEach(0);
     orbsGroup.setVelocityXEach(0);
+    GameEnd.visible = true;
   }
   
 
