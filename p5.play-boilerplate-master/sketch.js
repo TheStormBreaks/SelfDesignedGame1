@@ -2,7 +2,7 @@ var bg_img, bg;
 var topCliff, bottomCliff, topCliff_img, bottomCliff_img;
 var spaceship, spaceship_img;
 var welcomebg, welcomebg_img;
-var obstacle1, obstacle2, obstacle3, obstacle4//, obstacle5;
+var obstacle1, obstacle2, obstacle3, obstacle4;
 var obstaclesGroup;
 var power_orb;
 var score;
@@ -138,9 +138,11 @@ function draw() {
   }*/
    //checking if the game state play works or not
 
-   if (mousePressedOver(enterButton)){
-    gameState = PLAY
-   }
+  if (mousePressedOver(enterButton)){
+   gameState = PLAY
+  }
+
+   
 
 
   if (gameState === PLAY){
@@ -157,9 +159,14 @@ function draw() {
     spawnOrbs();
     
     score = score + Math.round(getFrameRate() / 60);
-    if (keyDown("space") && trex.y >= 161) {
-      trex.velocityY = -12;
-    }
+
+  if(spaceship.isTouching(topCliff)){
+   gameState = END;
+  }
+  if(spaceship.isTouching(bottomCliff)){
+    gameState = END;
+  }
+    
 
   }
   //iff game state is play, the cliffs move
@@ -168,13 +175,15 @@ function draw() {
 
   
 
-    for(var i = 0; i<obstaclesGroup.length; i++){
-      if(obstaclesGroup.get(i).isTouching(spaceship)){
-        //obstaclesGroup.get(i).destroy()
-        spaceship.destroy();
-        gameState = END;
-      }
+  for(var i = 0; i<obstaclesGroup.length; i++){
+    if(obstaclesGroup.get(i).isTouching(spaceship)){
+      //obstaclesGroup.get(i).destroy()
+      spaceship.destroy();
+      gameState = END;
     }
+  }
+
+  
 
   if(gameState === END){
    //spaceship.visible = false;
@@ -205,13 +214,19 @@ function draw() {
     fill(255)
     textSize(17)
     text("ENTER", displayWidth/2.24, displayHeight -193)
-    }
+  }
   
 
   if (gameState === PLAY){
     text("Score: " + score, 500, 50);
-
   }
+
+  topCliff.debug = true;
+  topCliff.setCollider("rectangle", 0, 75, 10000000, 140)
+  bottomCliff.debug = true;
+  bottomCliff.setCollider("rectangle", 0, 355, 10000000, 140)
+
+ 
   
 }
 
