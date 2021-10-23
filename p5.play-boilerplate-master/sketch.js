@@ -1,3 +1,7 @@
+//Self Designed Game 1
+//SpaceChace
+//
+
 var bg_img, bg;
 var topCliff, bottomCliff, topCliff_img, bottomCliff_img;
 var spaceship, spaceship_img;
@@ -201,6 +205,14 @@ function draw() {
     
     score = score + Math.round(getFrameRate() / 60);
 
+    for(var i = 0; i<obstaclesGroup.length; i++){
+      if(obstaclesGroup.get(i).isTouching(spaceship)){
+        //obstaclesGroup.get(i).destroy();
+        spaceship.destroy();
+        gameState = END;
+      }
+    }
+
     if(spaceship.isTouching(topCliff)){
       gameState = END;
     }
@@ -217,13 +229,7 @@ function draw() {
 
   
 
-  for(var i = 0; i<obstaclesGroup.length; i++){
-    if(obstaclesGroup.get(i).isTouching(spaceship)){
-      //obstaclesGroup.get(i).destroy();
-      spaceship.destroy();
-      gameState = END;
-    }
-  }
+  
 
   
 
