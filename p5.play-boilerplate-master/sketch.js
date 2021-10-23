@@ -24,16 +24,21 @@ var gameState = WELCOME;
 
 
 
+
 function preload() {
 
   bg_img = loadImage("pictures/bg.png");
 
+
   spaceship_img = loadImage("pictures/spaceship 2.png");
+
 
   bottomCliff_img = loadImage("pictures/Down cliff.png");
   topCliff_img = loadImage("pictures/Top cliff (1).png");
 
+
   welcomebg_img = loadImage("pictures/Welcome page.jpg");
+
 
   obstacle1 = loadImage("pictures/obstacle 1.png");
   obstacle2 = loadImage("pictures/obstacle 2.png");
@@ -41,27 +46,33 @@ function preload() {
   obstacle4 = loadImage("pictures/obstacle 4.png");
   //obstacle5 = loadImage("pictures/obstacle 5.png");
 
+  
   power_orb_image = loadImage("pictures/orbs.png");
   
-//loading audios, videos and images
+
+  //loading audios, videos and images
+}
 
 //FUNCTION PRELOAD
-
-}
 
 
 function setup() {
 
+
   createCanvas(displayWidth, displayHeight);
   //canvas created
 
+
   score = 0;
+
+
 
   fill('white')
   text("move the mouse so that x>1200.", 200, 200)
   bg = createSprite(700, 400, displayWidth, displayHeight);
   bg.addImage(bg_img);
   //create background sprite and add image
+
 
 
   welcomebg = createSprite(700, 300, displayWidth, displayHeight);
@@ -72,8 +83,13 @@ function setup() {
   //set scale to reduce the size
   //set to not visible so that is shows up iff gameState === WELCOME
 
+
+
   enterButton = createSprite(displayWidth/2.15,displayHeight - 200, 100, 50)
   enterButton.shapeColor = "#933A16"
+
+
+
 
   topCliff = createSprite(displayWidth/2, -20, displayWidth, displayHeight);
   topCliff.addImage(topCliff_img);
@@ -84,6 +100,8 @@ function setup() {
   //scales the top cliff to reduce size
    
 
+
+
   bottomCliff = createSprite(800, 300, displayWidth, displayHeight);
   bottomCliff.addImage(bottomCliff_img);
   bottomCliff.scale = 1.5;
@@ -92,6 +110,8 @@ function setup() {
   //scales the bottom cliff to reduce size
   
 
+
+
   spaceship = createSprite(100, 200, 20, 20);
   spaceship.addImage(spaceship_img);
   spaceship.debug = true;
@@ -99,6 +119,7 @@ function setup() {
   //create spaceship sprite and add image. 
 
 
+  
   obstaclesGroup = new Group();
   orbsGroup = new Group();
 
@@ -111,6 +132,7 @@ function setup() {
 
 function draw() {
 
+
   background(255,255,255);  
   
   
@@ -120,6 +142,7 @@ function draw() {
   //to check the co ordinates of the mouse
 
   
+
  
 
   if(gameState === WELCOME){
@@ -132,17 +155,24 @@ function draw() {
   //dissappear the cliffs, and the spaceship if game is at welcome stage
   //only show the welcome background
 
+
+
+
    
   /*if (mouseX>1100){
     gameState = PLAY
   }*/
    //checking if the game state play works or not
+  
+
+
 
   if (mousePressedOver(enterButton)){
-   gameState = PLAY
+    gameState = PLAY
   }
 
    
+
 
 
   if (gameState === PLAY){
@@ -160,17 +190,18 @@ function draw() {
     
     score = score + Math.round(getFrameRate() / 60);
 
-  if(spaceship.isTouching(topCliff)){
-   gameState = END;
-  }
-  if(spaceship.isTouching(bottomCliff)){
-    gameState = END;
-  }
+    if(spaceship.isTouching(topCliff)){
+      gameState = END;
+    }
+    if(spaceship.isTouching(bottomCliff)){
+      gameState = END;
+    }
     
 
   }
   //iff game state is play, the cliffs move
   //and then only th spaceship moves
+
 
 
   
@@ -185,15 +216,21 @@ function draw() {
 
   
 
+
+   
+
   if(gameState === END){
-   //spaceship.visible = false;
-   topCliff.velocityX = 0;
-   bottomCliff.velocityX = 0;
-   //obstaclesGroup.setVisibleEach(false);
-   obstaclesGroup.setVelocityXEach(0);
-   orbsGroup.setVelocityXEach(0);
+    //spaceship.visible = false;
+    topCliff.velocityX = 0;
+    bottomCliff.velocityX = 0;
+    //obstaclesGroup.setVisibleEach(false);
+    obstaclesGroup.setVelocityXEach(0);
+    orbsGroup.setVelocityXEach(0);
   }
   
+
+
+
 
 
   if (bottomCliff.x < 0) {
@@ -208,6 +245,9 @@ function draw() {
   }
   //resets the position of the top cliff
   //to make it seem like an infinite loop.
+
+
+
   drawSprites();
 
   if(gameState===WELCOME){
@@ -306,5 +346,4 @@ function spawnOrbs() {
 }
 
 
-//LIKEWISE, CREATE SPAWN ORBS
-//AND SPAWN POWER PALETS
+
