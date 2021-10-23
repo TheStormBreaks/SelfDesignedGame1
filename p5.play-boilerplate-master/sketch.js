@@ -199,8 +199,8 @@ function draw() {
     
 
   }
-  //iff game state is play, the cliffs move
-  //and then only th spaceship moves
+  //the cliffs move iff the gamestate becomes PLAY
+  //and then only the spaceship moves
 
 
 
