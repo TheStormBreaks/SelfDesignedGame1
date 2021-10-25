@@ -12,6 +12,8 @@ var power_orb;
 var score;
 var GameEnd, gameend_image;
 
+var timeout
+
 var enterButton;
 
 //variables for the game
@@ -19,6 +21,7 @@ var enterButton;
 
 var PLAY = 1;
 var END = 0;
+var POWER = 2;
 var STORY, WELCOME;
 var gameState = WELCOME;
 //var gameState = PLAY;
@@ -96,7 +99,7 @@ function setup() {
   GameEnd = createSprite();
   GameEnd.addImage(gameend_image);
   GameEnd.scale = 0;
-  GameEnd.visible = false;
+  
 
 
   enterButton = createSprite(displayWidth/2.15,displayHeight - 200, 100, 50);
@@ -148,10 +151,11 @@ function draw() {
 
 
   background(255,255,255);  
+  spaceship.y = mouseY;
   
   
   
-  console.log(mouseX, mouseY);
+  //console.log(mouseX, mouseY);
   //console.log("MOVE THE MOUSE SO THAT X>1200");
   //to check the co ordinates of the mouse
 
@@ -165,6 +169,7 @@ function draw() {
     bottomCliff.visible = false;
     spaceship.visible = false;
     welcomebg.visible = true;
+    bg.visible = false;
   }
   //dissappear the cliffs, and the spaceship if game is at welcome stage
   //only show the welcome background
@@ -193,6 +198,7 @@ function draw() {
     topCliff.visible = true;
     bottomCliff.visible = true;
     spaceship.visible = true;
+    bg.visible = true
     welcomebg.visible = false;
     enterButton.visible = false;
     
@@ -203,7 +209,23 @@ function draw() {
     spawnObstacles();
     spawnOrbs();
     
-    score = score + Math.round(getFrameRate() / 60);
+    
+
+
+
+    for(var i = 0; i<orbsGroup.length; i++){
+      if(orbsGroup.get(i).isTouching(spaceship)){
+        orbsGroup.get(i).destroy()
+         gameState = POWER;
+        
+
+        if(gameState === POWER){
+          normal();
+
+        }
+      }
+    }
+
 
     for(var i = 0; i<obstaclesGroup.length; i++){
       if(obstaclesGroup.get(i).isTouching(spaceship)){
@@ -212,6 +234,8 @@ function draw() {
         gameState = END;
       }
     }
+
+
 
     if(spaceship.isTouching(topCliff)){
       gameState = END;
@@ -227,7 +251,10 @@ function draw() {
 
 
 
-  
+  if(gameState === POWER){
+   spawnObstacles();
+   spawnOrbs();
+  }
 
   
 
@@ -237,10 +264,10 @@ function draw() {
    
 
   if(gameState === END){
-    spaceship.visible = false;
+    //spaceship.visible = false;
     topCliff.velocityX = 0;
     bottomCliff.velocityX = 0;
-    obstaclesGroup.setVisibleEach(false);
+    //obstaclesGroup.setVisibleEach(false);
     obstaclesGroup.setVelocityXEach(0);
     orbsGroup.setVelocityXEach(0);
     GameEnd.visible = true;
@@ -261,6 +288,11 @@ function draw() {
   if (topCliff.x < 0) {
     topCliff.x = topCliff.width/2;
   }
+
+
+  score = score + Math.round(getFrameRate() / 60);
+
+
   //resets the position of the top cliff
   //to make it seem like an infinite loop.
 
@@ -275,7 +307,7 @@ function draw() {
   }
   
 
-  if (gameState === PLAY){
+  if (gameState === PLAY || gameState === POWER){
     text("Score: " + score, 500, 50);
   }
 
@@ -361,6 +393,35 @@ function spawnOrbs() {
       orbsGroup.add(orbs);
       
   }
+}
+
+
+function invincible(){
+  gameState = POWER
+  topCliff.visible = true;
+  bottomCliff.visible = true;
+  spaceship.visible = true;
+  welcomebg.visible = false;
+  enterButton.visible = false;
+  spawnObstacles()
+  spawnOrbs()
+
+   /*if(obstaclesGroup.isTouching(spaceship) || topCliff.isTouching(spaceship) || bottomCliff.isTouching(spaceship)){
+    topCliff.velocityX = -10
+    bottomCliff.velocityX= -10
+  
+  }*/
+}
+
+function timeOut(ms){
+  return new Promise(invincible=> setTimeout(invincible,ms))
+
+
+}
+
+async function normal(){
+  await timeOut(5000)
+  gameState = PLAY
 }
 
 
